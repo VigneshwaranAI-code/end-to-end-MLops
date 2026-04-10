@@ -1,0 +1,411 @@
+/* ════════════════════════════════════════════
+   5-STAR LUXURY HOTEL — RESERVATION PREDICTION
+   style.css
+   ════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* ── RESET ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── TOKENS ── */
+:root {
+  --gold:          #C9A84C;
+  --gold-light:    #E8D5A3;
+  --gold-dark:     #8B6914;
+  --navy:          #0D1B2A;
+  --navy-surface:  #1E2F42;
+  --navy-card:     #243446;
+  --navy-hover:    #263850;
+  --cream:         #F7F2E8;
+  --text-muted:    #8FA3BB;
+  --border:        rgba(201, 168, 76, 0.22);
+  --border-hover:  rgba(201, 168, 76, 0.55);
+  --border-focus:  rgba(201, 168, 76, 1);
+  --focus-ring:    rgba(201, 168, 76, 0.12);
+  --success:       #4CAF84;
+  --danger:        #C96C6C;
+  --radius:        2px;
+  --radius-card:   4px;
+}
+
+/* ── PAGE ── */
+body {
+  min-height: 100vh;
+  background-color: var(--navy);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%,
+      rgba(201, 168, 76, 0.09) 0%, transparent 70%),
+    repeating-linear-gradient(
+      0deg,
+      transparent, transparent 59px,
+      rgba(201, 168, 76, 0.026) 59px,
+      rgba(201, 168, 76, 0.026) 60px),
+    repeating-linear-gradient(
+      90deg,
+      transparent, transparent 59px,
+      rgba(201, 168, 76, 0.026) 59px,
+      rgba(201, 168, 76, 0.026) 60px);
+  font-family: 'Montserrat', sans-serif;
+  color: var(--cream);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 20px 80px;
+}
+
+/* ── CONTAINER ── */
+.conatiner {           /* matches your existing HTML class */
+  width: 100%;
+  max-width: 720px;
+  position: relative;
+
+  /* gold corner brackets */
+  --_b: 2px;
+  --_s: 28px;
+}
+
+/* top-left bracket */
+.conatiner::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px;
+  width: var(--_s); height: var(--_s);
+  border-top:  var(--_b) solid var(--gold);
+  border-left: var(--_b) solid var(--gold);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* top-right bracket */
+.conatiner::after {
+  content: '';
+  position: absolute;
+  top: -3px; right: -3px;
+  width: var(--_s); height: var(--_s);
+  border-top:   var(--_b) solid var(--gold);
+  border-right: var(--_b) solid var(--gold);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* bottom brackets via the h2 pseudo — cheapest hook available */
+.conatiner h2::before {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: -3px;
+  width: var(--_s); height: var(--_s);
+  border-bottom: var(--_b) solid var(--gold);
+  border-left:   var(--_b) solid var(--gold);
+  pointer-events: none;
+  z-index: 2;
+}
+.conatiner h2::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; right: -3px;
+  width: var(--_s); height: var(--_s);
+  border-bottom: var(--_b) solid var(--gold);
+  border-right:  var(--_b) solid var(--gold);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── CARD SURFACE ── */
+.conatiner {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 56px 64px 64px;
+  overflow: hidden;
+}
+
+/* top shimmer line */
+.conatiner > *:first-child {
+  position: relative; /* anchor for ::before on h2 */
+}
+.conatiner::before {
+  /* override: also add the shimmer — handled via outline trick below */
+}
+
+/* shimmer bar at top edge of card */
+.conatiner {
+  --_shimmer: linear-gradient(90deg, transparent, var(--gold), transparent);
+  outline: none; /* reset */
+}
+.conatiner > h2:first-of-type {
+  position: relative;
+}
+/* We piggy-back the shimmer onto the card via box-shadow (inset top) */
+.conatiner {
+  box-shadow: inset 0 1px 0 0 transparent,
+              0 0 80px rgba(201, 168, 76, 0.04);
+  background-image:
+    /* top shimmer stripe */
+    linear-gradient(90deg, transparent 10%, var(--gold) 50%, transparent 90%),
+    /* card base */
+    linear-gradient(var(--navy-card), var(--navy-card));
+  background-size: 100% 1px, 100% 100%;
+  background-position: top center, top center;
+  background-repeat: no-repeat;
+}
+
+/* ── HEADING ── */
+.conatiner h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 6px;
+  position: static; /* reset from above trick */
+}
+
+/* five-star row — injected before h2 with a sibling trick isn't possible
+   so we use h2's top pseudo-content as a decorative stars line          */
+.conatiner h2 {
+  padding-top: 36px;            /* room for the stars row above */
+}
+.conatiner h2::before,
+.conatiner h2::after {
+  /* repurpose for stars decoration instead of bottom corners */
+  position: absolute;
+  font-family: 'Montserrat', sans-serif;
+}
+/* Reset bottom-bracket trick — we'll use the form element for those */
+.conatiner h2::before {
+  content: '★  ★  ★  ★  ★';
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--gold);
+  white-space: nowrap;
+  bottom: auto; right: auto;
+  border: none;
+  width: auto; height: auto;
+  pointer-events: none;
+  z-index: 2;
+}
+.conatiner h2::after {
+  content: 'Predictive Booking Analysis Suite';
+  top: auto;
+  bottom: -26px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  right: auto;
+  border: none;
+  width: auto; height: auto;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── FORM ── */
+form {
+  margin-top: 60px;   /* clears the subtitle */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 30px;
+}
+
+/* ── FORM GROUPS ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── INPUTS & SELECTS ── */
+.form-group input,
+.form-group select {
+  background: var(--navy-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+}
+
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23C9A84C'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.form-group select option {
+  background: var(--navy-card);
+  color: var(--cream);
+}
+
+.form-group input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  border-color: var(--border-hover);
+  background: var(--navy-hover);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--border-focus);
+  background: var(--navy-hover);
+  box-shadow: 0 0 0 3px var(--focus-ring),
+              inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* ── SUBMIT BUTTON ── */
+button[type="submit"] {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 16px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  background: linear-gradient(135deg,
+    #B8912F 0%,
+    #E2C26A 45%,
+    #C9A84C 70%,
+    #96710F 100%);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  padding: 17px 52px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(201, 168, 76, 0.30);
+}
+
+/* inner highlight sheen */
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    transparent 60%);
+  pointer-events: none;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 36px rgba(201, 168, 76, 0.45);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 12px rgba(201, 168, 76, 0.3);
+}
+
+/* ── RESULT ── */
+.result {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  border-radius: var(--radius-card);
+  padding: 26px 30px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid;
+  animation: fadeSlide 0.5s ease both;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* prediction == 1  → confirmed */
+.result p:only-child::before {
+  display: inline-block;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  line-height: 44px;
+  text-align: center;
+  font-size: 18px;
+  margin-right: 16px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* "will not cancel" */
+.result:has(p:contains("will not")) {
+  background: rgba(76, 175, 132, 0.08);
+  border-color: rgba(76, 175, 132, 0.35);
+}
+
+/* generic fallback — colour both states */
+.result {
+  background: rgba(201, 108, 108, 0.08);
+  border-color: rgba(201, 108, 108, 0.35);
+}
+
+.result p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  margin: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 620px) {
+  .conatiner {
+    padding: 40px 28px 48px;
+  }
+  form {
+    grid-template-columns: 1fr;
+  }
+  button[type="submit"] {
+    grid-column: 1;
+    width: 100%;
+    justify-content: center;
+  }
+  .result {
+    grid-column: 1;
+  }
+  .conatiner h2 {
+    font-size: 26px;
+  }
+}
