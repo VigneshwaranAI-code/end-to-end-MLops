@@ -61,6 +61,30 @@ pipeline {
                         docker push gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG}
                     '''
                 }
+
+            }
+        
+        }
+
+        stage('Deploy to Cloud Run') {
+            steps {
+                withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    echo 'Deploying to Cloud Run...'
+                    sh '''
+                        export PATH=$PATH:${GCLOUD_PATH}
+
+                        gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+                        gcloud config set project ${GCP_PROJECT}
+
+                        # Deploy to Cloud Run
+                        gcloud run deploy ${IMAGE_NAME} \
+                            --image gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG} \
+                            --region us-central1 \
+                            --platform managed \
+                            --allow-unauthenticated \
+                            --port 5000
+                    '''
+                }
             }
         }
     }
