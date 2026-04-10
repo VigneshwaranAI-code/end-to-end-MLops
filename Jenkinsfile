@@ -37,8 +37,10 @@ pipeline {
 
         stage('Train Model') {
             steps {
-                echo 'Training model...'
-                sh '${VENV_PATH}/bin/python pipeline/training_pipeline.py'
+                withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    echo 'Training model...'
+                    sh '${VENV_PATH}/bin/python pipeline/training_pipeline.py'
+                }
             }
         }
 
