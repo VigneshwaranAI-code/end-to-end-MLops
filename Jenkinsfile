@@ -31,11 +31,7 @@ pipeline{
                 }
             }
         }
-        stage('Train Model') {
-            steps {
-                sh 'python pipeline/training_pipeline.py'
-            }
-}
+       
 
         stage('Building and Pushing Docker Image to GCR'){
             steps{
