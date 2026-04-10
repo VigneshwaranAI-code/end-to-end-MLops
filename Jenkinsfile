@@ -23,15 +23,18 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+            stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies...'
+                echo 'Installing dependencies using venv...'
                 sh '''
+                python3 -m venv venv
+                . venv/bin/activate
+
                 pip install --upgrade pip
                 pip install -e .
                 '''
             }
-        }
+    }
 
         stage('Train Model') {
             steps {
