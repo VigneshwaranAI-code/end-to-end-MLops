@@ -32,6 +32,14 @@ pipeline {
                 '''
             }
         }
+        stage('Train Model') {
+            steps {
+                sh '''
+                . ${VENV_DIR}/bin/activate
+                python pipeline/training_pipeline.py
+                '''
+            }
+        }
 
         stage('Build & Push Docker Image') {
             steps {

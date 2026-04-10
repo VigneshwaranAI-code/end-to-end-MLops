@@ -53,7 +53,7 @@ class CustomException(Exception):
 
     @staticmethod
     def get_details_error_message(error_message, error_details: sys):
-        _, _, exc_tb = error_details.exc_info()
+        _, _, exc_tb = sys.exc_info()
 
         file_name = exc_tb.tb_frame.f_code.co_filename
         line_number = exc_tb.tb_lineno 
