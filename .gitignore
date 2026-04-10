@@ -1,0 +1,16 @@
+env/
+__pycache__/
+*.pyc
+.env
+
+# Ignore all JSON
+*.json
+
+# Except config
+!config.json
+
+logs/
+mlruns
+MLOps_project.egg-info 
+
+Ac.csv
