@@ -12,5 +12,6 @@ __pycache__/
 logs/
 mlruns
 MLOps_project.egg-info 
+*.db 
 
 Ac.csv

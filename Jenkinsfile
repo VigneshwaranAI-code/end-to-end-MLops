@@ -39,7 +39,10 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     echo 'Training model...'
-                    sh '${VENV_PATH}/bin/python pipeline/training_pipeline.py'
+                    sh '''
+                        rm -rf mlruns mlflow.db
+                        ${VENV_PATH}/bin/python pipeline/training_pipeline.py
+                    '''
                 }
             }
         }
